@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Hello, world!</title>
+  </head>
+
+  <STyle>
+    body{
+      background-color: #f8f9fa;
+    }
+    .navbar-nav{
+      margin: auto;
+    }
+    .nav-item{
+      margin: 0 5px;
+    }
+    .navbar{
+      margin-bottom: 1%;
+    }
+    .arrimg{
+      text-align: center;
+    }
+    .tt-col{
+      margin: 2vh 0;
+    }
+
+  </STyle>
+  <body>
+    <div id="app">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="./Logo.png" alt="" srcset=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse mt-4" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="./index.html"><h4>購票資訊</h4></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="./search.html"><h4>訂購查詢</h4></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="./reg.html"><h4>註冊帳號</h4></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#"><h4>關於台鐵</h4></a>
+                </li>
+              </ul>
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <img src="https://img.icons8.com/ios/40/000000/search--v1.png"/>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+          <h3>查票資訊</h3>
+          <hr>
+
+          <div class="container">
+            <div class="ha-nav-content tab-content">
+                <div class="tab-pane fade show active" id="index-tab-01" role="tabpanel" aria-labelledby="">
+                    <div class="tt-search-panel">
+                        <div class="tt-col">
+                            <div class="inline-input-group row">
+                                <div class="col-input col-5">
+                                    <label class="input-smalllabel" for="select_location01">起程站</label>
+                                    <select id="select_location01" class="form-control mt-0 select-type01" title="出發站" v-model="start">
+                                            <option>南港</option>
+                                            <option>台北</option>
+                                            <option>板橋</option>
+                                            <option>桃園</option>
+                                            <option>新竹</option>
+                                            <option>苗栗</option>
+                                            <option>台中</option>
+                                            <option>彰化</option>
+                                            <option>雲林</option>
+                                            <option>嘉義</option>
+                                            <option>台南</option>
+                                            <option>左營</option>
+                                    </select>
+                                </div>
+                                <div class="col-input col-2 justify-bottom">
+                                  <div class="col-12 mt-3 arrimg"><img src="https://img.icons8.com/ios-filled/50/000000/arrow.png"/></div>
+                                </div>
+                                <div class="col-input col-5">
+                                    <label class="input-smalllabel" for="select_location02">到達站</label>
+                                    <select id="select_location02" class="form-control mt-0 select-type01" title="到達站" v-model="end">
+                                            <option>南港</option>
+                                            <option>台北</option>
+                                            <option>板橋</option>
+                                            <option>桃園</option>
+                                            <option>新竹</option>
+                                            <option>苗栗</option>
+                                            <option>台中</option>
+                                            <option>彰化</option>
+                                            <option>雲林</option>
+                                            <option>嘉義</option>
+                                            <option>台南</option>
+                                            <option selected >左營</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tt-col">
+                            <div class="inline-input-group row" id="tot-1">
+                                <div class="col-input col-6">
+                                    <label class="input-smalllabel" for="Departdate01">去程日期</label>
+                                    <input id="Departdate01" type="date" value="" class="form_date form-control" v-model="time">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="tt-col">
+                            <button type="button" title="查詢" class="btn btn-primary mt-3" id="start-search" @click="getApi">
+                                查詢
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                    <div class="tab-pane fade" id="index-tab-02" role="tabpanel" aria-labelledby="">
+                        <div class="home-reservation">
+                            <iframe src="" id="irsUrl" title="網路訂票"></iframe>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <br>  
+        
+
+        <div class="container" v-show="status">
+          <h2>搜尋結果</h2>
+          <hr>
+          <h4>從{{start}}到{{end}}</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">出發時間</th>
+                <th scope="col">抵達時間</th>
+                <th scope="col">車次</th>
+                <th scope="col">票價</th>
+                <th scope="col">狀態</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item,index in data">
+                <th scope="row">{{index + 1}}</th>
+                <td>{{item.起站時間}}</td>
+                <td>{{item.驛站時間}}</td>
+                <td>{{item.車號}}</td>
+                <td>{{Math.abs(item.StopSequence - item.StartSequence) * 120}}</td>
+                <td><button type="submit" class="btn btn-success" @click="sendHandlr(item)">立即下訂</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.js' integrity='sha512-Kg0CewqPNO/ziOJuCq5eyl3P/V6OLz/Lb1I2m+yKS3lHZcGVFN/KOew18rWP+kTsL7haYdaqGjwHQCZrN0heLQ==' crossorigin='anonymous'></script>    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.2.0/sha.js' integrity='sha512-mvfoZwdzM8yPhlNxN1lU8S5wcfC5aPRCD3W0jsOeA+D75MMCrycxQqIvt6K7c5P7jItn7AXiAreuR+eockUHwQ=='
+            crossorigin='anonymous'></script>
+
+
+    <script>
+      class alert2{
+          no() {
+            Swal.fire({
+              icon: 'error',
+              title: '資料庫尚無資料',
+              text: '請聯絡客服人員..',
+            })
+          };
+          yes(){
+              Swal.fire({
+              position: 'center-center',
+              icon: 'success',
+              title: '訂購完成',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        }
+
+      const pop = new alert2();
+
+      const app = Vue.createApp({
+        data() {
+          return{
+            data:[],
+            start:"南港",
+            end:"左營",
+            time:"",
+            status:false
+          }
+        },
+        methods: {
+          getApi(){
+            if(this.time.length){
+              axios.get(`./timetable.php?Date=${this.time}&StartName=${this.start}&EndName=${this.end}`)
+              .then(res => {
+                this.data = res.data
+                if(this.data.length > 0 ){
+                  this.status = true
+                }else{
+                  pop.no();
+                  this.status = false
+                }
+              })
+              .catch(err => {
+                console.error(err); 
+              })
+            }else{
+              alert("請選擇日期")
+            }
+          },
+
+          sendHandlr(item){
+            window.location = `./check.php?date=${item.時間}&StartName=${item.起站}&StartTime=${item.起站時間}&EndName=${item.驛站}&TrainNO=${item.車號}`
+          },
+
+        },
+      })
+      app.mount('#app');
+    </script>
+
+</body>
+</html>
